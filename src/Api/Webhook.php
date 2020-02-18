@@ -88,15 +88,15 @@ class Webhook extends HttpApi
     /**
      * @return CreateResponse|ResponseInterface
      */
-    public function create(string $domain, string $id, string $url)
+    public function create(string $domain, string $id, array $urls)
     {
         Assert::notEmpty($domain);
         Assert::notEmpty($id);
-        Assert::notEmpty($url);
+        Assert::isArray($urls);
 
         $params = [
             'id' => $id,
-            'url' => $url,
+            'url' => $urls,
         ];
 
         $response = $this->httpPost(sprintf('/v3/domains/%s/webhooks', $domain), $params);
@@ -107,14 +107,14 @@ class Webhook extends HttpApi
     /**
      * @return UpdateResponse|ResponseInterface
      */
-    public function update(string $domain, string $id, string $url)
+    public function update(string $domain, string $id, array $urls)
     {
         Assert::notEmpty($domain);
         Assert::notEmpty($id);
-        Assert::notEmpty($url);
+        Assert::isArray($urls);
 
         $params = [
-            'url' => $url,
+            'url' => $urls,
         ];
 
         $response = $this->httpPut(sprintf('/v3/domains/%s/webhooks/%s', $domain, $id), $params);
